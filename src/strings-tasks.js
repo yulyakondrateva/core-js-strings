@@ -509,22 +509,17 @@ function extractEmails(str) {
  *
  */
 function encodeToRot13(str) {
-  const chars = str.split('');
-  const codeA = 'A'.codePointAt(0);
-  const codeLowerA = 'a'.codePointAt(0);
-  const mod = 'Z'.codePointAt(0) - codeA;
-  for (let i = 0; i < chars.length; i += 1) {
-    let code = str.codePointAt(i);
-    let start;
-    if (code < codeLowerA) {
-      start = codeA;
-    } else {
-      start = codeLowerA;
-    }
+  const a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const b = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  const chars = [];
 
-    code = (code - start + 13) % mod;
-    code += start;
-    chars[i] = String.fromCharCode(code);
+  for (let i = 0; i < str.length; i += 1) {
+    let c = str.charAt(i);
+    const index = a.indexOf(c);
+    if (index !== -1) {
+      c = b.charAt(index);
+    }
+    chars.push(c);
   }
   return chars.join('');
 }
@@ -555,11 +550,60 @@ function encodeToRot13(str) {
  */
 function getCardId(value) {
   const cards = [
-    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
-    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
-    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
-    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
-    return cards.findIndex(value);
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return cards.indexOf(value);
 }
 
 module.exports = {
